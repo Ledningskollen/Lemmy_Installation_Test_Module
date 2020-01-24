@@ -1,10 +1,10 @@
-import requests
-import json
+import os
 from geojson import GeometryCollection, Point, LineString, Polygon
 import random
 from enum import Enum
 import datetime
-from APIRequests import APIRequests
+from Lemmy_Installation_Test_Module.APIRequests import APIRequests
+from Lemmy_Installation_Test_Module.AOI import AOI
 
 # AlexLÄTest
 class GeometryType(Enum):
@@ -22,6 +22,7 @@ class CaseCreator:
         self.password = password
         self.module_organization_name = 'Rakvatten AB'
         self.api = APIRequests(base_url=self.base_url, username=self.username, password=self.password)
+        self.aoi = AOI('C:/Users/alev/PycharmProjects/Lemmy_Installation_Test_Module/Lemmy_Installation_Test_Module/Geometries')
         self.case_list = []
         if self.api.login():
             self.generate_cases()
@@ -73,6 +74,7 @@ class CaseCreator:
 
     def create_geometry(self, geometry_type, coordinates):
         try:
+            bbox = self.aoi
             geometries = []
             new_coordinates = []
             new_geometry = None
